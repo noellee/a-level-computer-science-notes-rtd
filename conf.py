@@ -28,6 +28,7 @@ author = 'Noel Lee'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.doctest',
     'sphinx.ext.todo',
 ]
 
