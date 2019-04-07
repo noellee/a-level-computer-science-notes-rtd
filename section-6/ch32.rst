@@ -1,0 +1,72 @@
+Ch 32. Bitwise manipulation and masks
+=====================================
+
+Shifts
+------
+
+**Left shift**::
+
+   ┌───┬─────────────────┐
+   │   │ 1 0 1 1 1 0 0 0 │
+   └───┴─────────────────┘
+   ┌───┬─────────────────┐
+   │ 1 │ 0 1 1 1 0 0 0 _ │
+   └───┴─────────────────┘
+   carry
+
+**Right shift**::
+
+   ┌─────────────────┬───┐
+   │ 1 0 1 1 1 0 0 0 │   │
+   └─────────────────┴───┘
+   ┌─────────────────┬───┐
+   │ _ 1 0 1 1 1 0 0 │ 0 │
+   └─────────────────┴───┘
+                     carry
+
+When we do a shift, there's always one bit that gets "pushed" to the carry bit.
+On the other end, we get an empty space for a bit. The following shifts are
+ways of determining what to fill in that empty bit.
+
+Logical shift
+~~~~~~~~~~~~~
+
+The empty bit is filled with zero.
+
+Arithmetic shift
+~~~~~~~~~~~~~~~~
+
+The empty bit is filled with the same value as its immediate neighbor bit.
+
+Circular shift
+~~~~~~~~~~~~~~
+
+The value of the carry bit is used to fill in the empty bit.
+
+Masks
+-----
+
+Bitwise OR
+~~~~~~~~~~
+
+Sets the bits at desired positions to 1::
+
+       0111 0001
+   OR  0000 1100  <- mask
+   -------------
+       0111 1101
+
+Bitwise AND
+~~~~~~~~~~~
+
+Extract bits at desired positions::
+
+        0111 0001
+   AND  0011 1100  <- mask
+   --------------
+        0011 0000
+
+This is particularly useful when parts of a bitstring have special meanings
+(e.g. mantissa in floating point numbers, op code in assembly instructions
+etc). Combined with a logical shift (to the right), we can easily extract the
+value at specific bit ranges.
