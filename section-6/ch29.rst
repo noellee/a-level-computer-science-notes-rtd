@@ -1,0 +1,66 @@
+Ch 29. ASCII and Unicode
+========================
+
+Character sets
+--------------
+
+What is a character set?
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+A character set is essentially a mapping of character codes to the characters
+they represent.
+
+ASCII (American Standard Code for Information Interchange)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A 7-bit character set. This gives us 2\ :sup:`7` = *128* possible characters.
+Later, ASCII is extended to 8 bits, allowing it to represent more special
+characters.
+
+Unicode
+~~~~~~~
+
+Created to be a unified format that aims to represent all characters from all
+language. Unicode is a standard that defines *1,114,112* possible code points.
+Character encodings such as **UTF-8**, **UTF-16**, **UTF-32** etc are different
+ways to encode all these code points.
+
+**UTF-8** is a *variable* width encoding. It uses anywhere from 1 to 4 bytes to
+represent characters. 2\ :sup:`4*8` = 2\ :sup:`32` = 4,294,967,296
+combinations.
+
+**UTF-16** is also a *variable* width encoding. It uses either 1 or 2 16-bit
+groups ("code units"). 2\ :sup:`2*16` = 2\ :sup:`32` = 4,294,967,296
+combinations.
+
+.. note::
+
+   The book says that only 65,536 combinations are possible in **UTF-16**,
+   which is **not true**. They are likely referring to **UCS-2**, which is a
+   *fixed* width 16-bit encoding. **UTF-16** is an extension to **UCS-2**.
+   `More info <http://www.differencebetween.net/technology/software-technology/difference-between-ucs-2-and-utf-16/>`_
+
+**UTF-32** is a *fixed* width encoding. It always uses 32 bits (i.e. 4 bytes).
+2\ :sup:`32` = 4,294,967,296 combinations.
+
+ASCII vs Unicode
+~~~~~~~~~~~~~~~~
+
+======================================  =====================================
+ASCII                                   Unicode                                                
+======================================  =====================================
+Fixed width                             (*Usually*) variable width                           
+Limited representation of characters    Can represent basically any character
+                                        of any language  
+Requires less storage                   Requires more storage                                  
+======================================  =====================================
+
+See it in action!
+-----------------
+
+>>> ord('a')  # ord (ordinal) returns the character code of a character
+97
+>>> chr(98)  # chr converts a character code to its corresponding character
+'b'
+>>> chr(ord('A'))  # chr and ord are inverses of each other!
+'A'
