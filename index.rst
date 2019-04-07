@@ -13,6 +13,10 @@ A-Level Computer Science Notes
 
    section-6/*
 
+.. toctree::
+   :caption: Appendix
+
+   todo
 
 
 Indices and tables
