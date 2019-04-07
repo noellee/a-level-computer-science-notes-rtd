@@ -6,8 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-sphinx = "*"
-sphinx-rtd-theme = { git = 'https://github.com/rtfd/sphinx_rtd_theme.git', ref = 'a49a812' }
+sphinx = "==2.0.0"
+sphinx-rtd-theme = {git = 'https://github.com/rtfd/sphinx_rtd_theme.git',ref = 'a49a812'}
 
 [requires]
 python_version = "3.7"
