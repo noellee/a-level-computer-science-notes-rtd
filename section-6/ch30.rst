@@ -77,7 +77,7 @@ course.)
    :math:`3` then add it to :math:`5`.
 
 Fixed point numbers
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 What if we want to represent fractions in binary?
 
