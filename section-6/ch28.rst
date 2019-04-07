@@ -1,0 +1,32 @@
+Ch 28. Primitive data types, binary and hexadecimal
+===================================================
+
+Primitive data types
+--------------------
+
+============  =========================================  ====================
+Type          Description                                Examples
+============  =========================================  ====================
+Integer       Whole numbers                              -100, 0, 42
+Real/float    Any number on the real number line         -12.5, 0.0, 100.23
+Boolean       Truth value                                True, False
+Character     Letter, number or special character,       'a', '1', '#'
+              typically represented in ASCII
+
+              (in some languages, ``'a' + 'b' == 195``,
+              because of their ASCII codes!)
+String        Concatenation of characters                "hello", ""
+============  =========================================  ====================
+
+Number bases
+------------
+
+.. todo::
+
+   Write more about different bases
+
+Hex to Bin/Bin to Hex
+~~~~~~~~~~~~~~~~~~~~~
+
+Since 2\ :sup:`4` = 16, a group of 4 binary digits can be converted to 1
+hexadecimal digit.
