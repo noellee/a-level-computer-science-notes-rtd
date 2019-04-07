@@ -1,0 +1,133 @@
+Ch 30. Binary arithmetic
+========================
+
+Representation of signed integers
+---------------------------------
+
+Sign and magnitude
+~~~~~~~~~~~~~~~~~~
+
+The leftmost bit (**most significant bit**) represents the sign (+/-).
+
+========  ===========  ================
+Denary    Unsigned     Sign & mag.     
+========  ===========  ================
+3         0000 0011    **0**\ 000 0011  
+-3        \-           **1**\ 000 0011  
+========  ===========  ================
+
+**Problems:**
+
+- 0 is represented twice (+0 and -0)
+- Addition is weird (try adding +3 and -3)
+
+Two's complement
+~~~~~~~~~~~~~~~~
+
+Non-negative numbers in two's complement is the exact same as unsigned.
+
+.. admonition:: Converting a -ve int to two's complement
+
+   1. Flip all the bits. This is called *one's complement*.
+   2. Add 1 to the one's complement, ignoring any overflowing.
+
+   Two do the reverse, we can reverse the process, i.e. minus 1 then flip the
+   bits!
+
+.. tip::
+
+   The **most significant bit** here also tells you whether the number is
+   negative or not! If it is 1, then the two's complement is negative.
+
+**Range**
+
+- Total numbers represented by *n*-bit two's complement = :math:`2^n`
+- Maximum value represented by *n*-bit two's complement = :math:`2^{n-1} - 1`
+- Minimum value represented by *n*-bit two's complement = :math:`-2^{n-1}`
+
+.. admonition:: Example
+
+   Consider an 8-bit two's complement representation.
+
+   The largest positive value we can represent here is ``0111 1111``, which is
+   the largest value we can get with 7 bits while keeping the most significant
+   bit 0 (for it to be +ve!). This is equivalent to :math:`2^7 - 1 = 127`.
+
+   We know straightforwardly that we can represent :math:`2^8 = 256` numbers in
+   total here, since there are no duplicated zero's in two's complement. Then,
+
+   .. math::
+
+      \begin{align}
+         \text{max} - \text{min} + 1 &= \text{total} \\
+         127 - \text{min} + 1 &= 256 \\
+         \text{min} &= -128
+      \end{align}
+
+**Subtraction**
+
+Two's complement gives us a nice property - addition of any numbers gives the
+expected results, unlike sign and magnitude! (Except when it overflows, of
+course.)
+
+.. admonition:: Example
+
+   To perform a subtraction, e.g. :math:`5 - 3`, we can rewrite the equation to
+   :math:`5 + (-3)`. Then, we just need to find the two's complement of
+   :math:`3` then add it to :math:`5`.
+
+Fixed point numbers
+~~~~~~~~~~~~~~~~~~~
+
+What if we want to represent fractions in binary?
+
+In a denary system, this is how we represent fixed point numbers:
+
+==============  ==============  ==============  ===  =================  =================
+:math:`10^2`    :math:`10^1`    :math:`10^0`    \    :math:`10^{-1}`    :math:`10^{-2}`  
+==============  ==============  ==============  ===  =================  =================
+1               2               3               .    4                  5                
+==============  ==============  ==============  ===  =================  =================
+
+.. math::
+   
+   123.45_{10}
+   = 1 \cdot 10^2 + 2 \cdot 10^1 + 3 \cdot 10^0
+     + 4 \cdot 10^{-1} + 5 \cdot 10^{-2}
+       
+Similarly in a binary system:
+
+=============  =============  =============  ===  ================  ================
+:math:`2^2`    :math:`2^1`    :math:`2^0`    \    :math:`2^{-1}`    :math:`2^{-2}`  
+=============  =============  =============  ===  ================  ================
+1              1              0              .    0                 1               
+=============  =============  =============  ===  ================  ================
+
+.. math::
+   
+   \begin{align}
+      110.01_{2}
+      &= 1 \cdot 2^2 + 1 \cdot 2^1 + 0 \cdot 2^0
+        + 0 \cdot 2^{-1} + 1 \cdot 2^{-2} \\
+      &= 6.25_{10}
+   \end{align}
+
+.. admonition:: Converting denary fixed point to binary
+
+   We can convert the integer part normally and then convert the fractional
+   part separately. This can be done be finding the right combination of
+   :math:`2^{-n}` that sums to the target fraction.
+
+   e.g. For a fractional part, we find that
+   :math:`2^{-1} + 2^{-4} = 0.5625_{10}`, therefore
+   :math:`0.1001_2 = 0.5625_{10}`.
+
+   We can find this combination by repeatedly subtracting negative exponents of
+   2 from the fraction.
+
+Fixed point numbers in binary is *less accurate* than in denary, i.e. there
+are fixed point numbers in denary that cannot be finitely represented in
+binary! Try converting :math:`0.3_{10}`. This is what leads to floating
+point precision errors in programming because we are only limited to a
+finite number of bits to represent a number, causing us to loose precision
+sometimes.

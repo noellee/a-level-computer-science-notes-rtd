@@ -29,6 +29,7 @@ author = 'Noel Lee'
 # ones.
 extensions = [
     'sphinx.ext.doctest',
+    'sphinx.ext.mathjax',
     'sphinx.ext.todo',
 ]
 
