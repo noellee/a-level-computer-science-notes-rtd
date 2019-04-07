@@ -3,12 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to A-Level Computer Science Notes's documentation!
-==========================================================
+A-Level Computer Science Notes
+==============================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :glob:
+   :caption: Section 6
+
+   section-6/*
 
 
 
