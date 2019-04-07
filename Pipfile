@@ -1,0 +1,13 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+sphinx = "*"
+sphinx-rtd-theme = { git = 'https://github.com/rtfd/sphinx_rtd_theme.git', ref = 'a49a812' }
+
+[requires]
+python_version = "3.7"
