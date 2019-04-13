@@ -1,0 +1,167 @@
+Ch 17. Relational databases and normalization
+=============================================
+
+Relational databases
+--------------------
+
+.. todo::
+
+   TODO
+
+Normalization
+-------------
+
+1NF: First normal form
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Each field only contains at most 1 value
+- Each record is unique
+
+2NF: Second normal form
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Satisfies 1NF
+- No **partial dependencies**
+
+   + Partial dependency occurs when an attribute only depends part of a
+     composite key, instead of the entire composite key
+
+3NF: Third normal form
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Satisfies 2NF
+- No **non-key dependencies**
+
+   + Non-key dependency occurs when an attribute depends on another non-key
+     attribute
+
+.. admonition:: Normalization example
+
+   **Before normalization (0NF)**
+
+   =============  ============  ==============  ==========  =====================  ==============
+   *StudentId*    Name          Class           GradYear    Subjects               Teacher       
+   =============  ============  ==============  ==========  =====================  ==============
+   1              Andy Lau      Higher Sixth    2019        Biology, CompSci       Mr. B, Ms. C  
+   2              Jacky Chan    Lower Sixth     2020        CompSci, Psychology    Ms. C, Mr. P  
+   3              Lucy Liu      Lower Sixth     2020        Psychology, Maths      Mr. P, Ms. M  
+   =============  ============  ==============  ==========  =====================  ==============
+
+   Violates 1NF:
+
+   - There are multiple values for ``Subjects``
+
+   **1NF normalization**
+
+   =============  ============  ==============  ==========  ============  =========
+   *StudentId*    Name          Class           GradYear    Subject       Teacher  
+   =============  ============  ==============  ==========  ============  =========
+   1              Andy Lau      Higher Sixth    2019        Biology       Mr. B    
+   1              Andy Lau      Higher Sixth    2019        CompSci       Ms. C    
+   2              Jacky Chan    Lower Sixth     2020        CompSci       Ms. C    
+   2              Jacky Chan    Lower Sixth     2020        Psychology    Mr. P    
+   3              Lucy Liu      Lower Sixth     2020        Psychology    Mr. P    
+   3              Lucy Liu      Lower Sixth     2020        Maths         Ms. M    
+   =============  ============  ==============  ==========  ============  =========
+
+   Now our primary key ``StudentId`` is no longer unique :( We can solve that
+   by using relations::
+
+      Student(*StudentId*, Name)
+      Subject(*SubjectId*, SubjectName)
+      StudentSubject(*StudentId*, *SubjectId*, Teacher)
+
+   =============  ============  ==============  ==========
+   *StudentId*    Name          Class           GradYear  
+   =============  ============  ==============  ==========
+   1              Andy Lau      Higher Sixth    2019      
+   2              Jacky Chan    Lower Sixth     2020      
+   3              Lucy Liu      Lower Sixth     2020      
+   =============  ============  ==============  ==========
+
+   =============  =============
+   *SubjectId*    SubjectName  
+   =============  =============
+   1              Biology      
+   2              CompSci      
+   3              Psychology   
+   4              Maths        
+   =============  =============
+
+   =============  =============  =========
+   *StudentId*    *SubjectId*    Teacher  
+   =============  =============  =========
+   1              1              Mr. B    
+   1              2              Ms. C    
+   2              2              Ms. C    
+   2              3              Mr. P    
+   3              3              Mr. P    
+   3              4              Ms. M    
+   =============  =============  =========
+
+   Violates 2NF:
+
+   - ``Teacher`` in ``StudentSubject`` can be inferred from ``SubjectId``
+     (assuming only one teacher teaches each subject)
+   - ``Teacher`` depends on only part of the (composite) primary key.
+
+   **2NF normalization**::
+
+      Student(*StudentId*, FirstName, LastName, FullName)
+      Subject(*SubjectId*, SubjectName, Teacher)
+      StudentSubject(*StudentId*, *SubjectId*)
+
+   =============  ============  ==============  ==========
+   *StudentId*    Name          Class           GradYear  
+   =============  ============  ==============  ==========
+   1              Andy Lau      Higher Sixth    2019      
+   2              Jacky Chan    Lower Sixth     2020      
+   3              Lucy Liu      Lower Sixth     2020      
+   =============  ============  ==============  ==========
+
+   =============  =============  =========
+   *SubjectId*    SubjectName    Teacher  
+   =============  =============  =========
+   1              Biology        Mr. B    
+   2              CompSci        Ms. C    
+   3              Psychology     Mr. P    
+   4              Maths          Ms. M    
+   =============  =============  =========
+
+   =============  =============
+   *StudentId*    *SubjectId*  
+   =============  =============
+   1              1            
+   1              2            
+   2              2            
+   1              3            
+   =============  =============
+
+   Violates 3NF:
+
+   - ``GradYear`` can be inferred from ``Class`` (``Class`` is a non-key
+     attribute)
+
+   **3NF normalization**::
+
+      Student(*StudentId*, FirstName, LastName, FullName)
+      Subject(*SubjectId*, SubjectName, Teacher)
+      StudentSubject(*StudentId*, *SubjectId*)
+      Class(*ClassId*, ClassName, GradYear)
+
+   =============  ============  =========
+   *StudentId*    Name          ClassId  
+   =============  ============  =========
+   1              Andy Lau      1        
+   2              Jacky Chan    2        
+   3              Lucy Liu      2        
+   =============  ============  =========
+
+   ===========  ==============  ==========
+   *ClassId*    ClassName       GradYear  
+   ===========  ==============  ==========
+   1            Higher Sixth    2019      
+   2            Lower Sixth     2020      
+   ===========  ==============  ==========
+
+   (``Subject`` and ``StudentSubject`` tables unchanged, omitted)

@@ -9,6 +9,13 @@ A-Level Computer Science Notes
 .. toctree::
    :maxdepth: 2
    :glob:
+   :caption: Section 4
+
+   section-4/*
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
    :caption: Section 6
 
    section-6/*
